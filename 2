@@ -1,0 +1,24 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local originalGravity = workspace.Gravity
+local cooldown = false
+
+humanoid.RootPart.CFrame = CFrame.new(-1054.52551, 257.35022, -815.264038, 0.999199986, 0.000173590146, -0.0399918184, -0.000219493624, 0.999999344, -0.00114343374, 0.0399915949, 0.00115129689, 0.999199331)
+
+workspace.Gravity = 3
+
+local function resetGravity()
+    wait(0.1) -- Adjust the time as needed
+    workspace.Gravity = originalGravity
+    cooldown = false
+end
+
+humanoid.Jumping:Connect(function()
+    if not cooldown then
+        cooldown = true
+        workspace.Gravity = originalGravity
+        resetGravity()
+    end
+end)

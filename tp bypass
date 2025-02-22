@@ -8,6 +8,6 @@ humanoid.RootPart.CFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.99
 
 workspace.Gravity = 0.1
 
-wait(0.1) -- Adjust the time as needed
+wait(3) -- Adjust the time as needed
 
 workspace.Gravity = originalGravity

@@ -6,8 +6,15 @@ local originalGravity = workspace.Gravity
 
 humanoid.RootPart.CFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.999729216, -4.84167906e-09, -0.0232702903, 4.33031522e-09, 1, -2.20253575e-08, 0.0232702903, 2.19186251e-08, 0.999729216)
 
-workspace.Gravity = 0.1
+workspace.Gravity = 10
 
-wait(3) -- Adjust the time as needed
+local function resetGravity()
+    wait(0.1) -- Adjust the time as needed
+    workspace.Gravity = originalGravity
+end
 
-workspace.Gravity = originalGravity
+humanoid.Jumping:Connect(function()
+    if workspace.Gravity ~= originalGravity then
+        resetGravity()
+    end
+end)

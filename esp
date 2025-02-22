@@ -1,0 +1,74 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local StarterGui = game:GetService("StarterGui")
+
+local excludedUsername = "vizard132"
+local tweenInfo = TweenInfo.new(
+	0.2,  -- Reduced duration for faster effect
+	Enum.EasingStyle.Quad,
+	Enum.EasingDirection.Out
+)
+
+local targetSize = Vector3.new(16.981, 10.068, 17.183)
+local targetTransparency = 0.9
+
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+	if input.KeyCode == Enum.KeyCode.E and not gameProcessedEvent then
+		local mouseLocation = UserInputService:GetMouseLocation()
+		local camera = workspace.CurrentCamera
+
+		local screenToWorldRay = camera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
+		local raycastResult = workspace:Raycast(screenToWorldRay.Origin, screenToWorldRay.Direction * 1000)
+
+		if raycastResult then
+			local hitPart = raycastResult.Instance
+			local player = Players:GetPlayerFromCharacter(hitPart:FindFirstAncestorOfClass("Model"))
+
+			if player and player.Name ~= excludedUsername and player.Character then
+				local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+				if humanoidRootPart then
+					local currentSize = humanoidRootPart.Size
+					local newSize = currentSize == targetSize and Vector3.new(1, 1, 1) or targetSize
+					local currentTransparency = humanoidRootPart.Transparency
+					local newTransparency = currentTransparency == targetTransparency and 0 or targetTransparency
+
+					local sizeTween = TweenService:Create(humanoidRootPart, tweenInfo, { Size = newSize })
+					local transparencyTween = TweenService:Create(humanoidRootPart, tweenInfo, { Transparency = newTransparency })
+
+					sizeTween:Play()
+					transparencyTween:Play()
+
+					humanoidRootPart.CanCollide = false
+
+					local highlight = Instance.new("Highlight")
+					highlight.Parent = humanoidRootPart
+
+					highlight.OutlineColor = Color3.new(1, 0.333333, 0)
+					highlight.FillColor = Color3.new(1, 1, 1) 
+					highlight.FillTransparency = 0.9 
+
+					local isHighlighted = false
+
+					local function toggleHighlight()
+						if isHighlighted then
+							highlight.Enabled = false
+							isHighlighted = false
+						else
+							highlight.Enabled = true
+							isHighlighted = true
+						end
+					end
+
+					toggleHighlight()
+
+					StarterGui:SetCore("SendNotification", {
+						Title = "System Notification",
+						Text = "You have interacted with " .. player.Name,
+						Duration = 2
+					})
+				end
+			end
+		end
+	end
+end)

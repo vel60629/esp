@@ -1,1 +1,13 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local originalGravity = workspace.Gravity
 
+humanoid.RootPart.CFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.999729216, -4.84167906e-09, -0.0232702903, 4.33031522e-09, 1, -2.20253575e-08, 0.0232702903, 2.19186251e-08, 0.999729216)
+
+workspace.Gravity = 0.1
+
+wait(0.1) -- Adjust the time as needed
+
+workspace.Gravity = originalGravity

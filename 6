@@ -1,0 +1,19 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local originalGravity = workspace.Gravity
+
+local function setGravity(value)
+	workspace.Gravity = value
+end
+
+local function teleportWithGravity(cframe, gravity)
+	setGravity(gravity)
+	humanoidRootPart.CFrame = cframe
+	wait(0.5) -- Adjust the wait time as needed
+	setGravity(originalGravity)
+end
+
+-- Example usage
+local targetCFrame = CFrame.new(-1518.84656, 275.398315, -992.202454, -0.00993966591, 2.4035316e-08, -0.999950588, 2.71242531e-08, 1, 2.37668836e-08, 0.999950588, -2.68866778e-08, -0.00993966591) -- Change to your desired CFrame
+teleportWithGravity(targetCFrame, 0) -- Set gravity to 0 while teleporting

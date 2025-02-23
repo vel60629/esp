@@ -1,24 +1,19 @@
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local originalGravity = workspace.Gravity
-local cooldown = false
 
-humanoid.RootPart.CFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.999729216, -4.84167906e-09, -0.0232702903, 4.33031522e-09, 1, -2.20253575e-08, 0.0232702903, 2.19186251e-08, 0.999729216)
-
-workspace.Gravity = 3
-
-local function resetGravity()
-    wait(0.1) -- Adjust the time as needed
-    workspace.Gravity = originalGravity
-    cooldown = false
+local function setGravity(value)
+	workspace.Gravity = value
 end
 
-humanoid.Jumping:Connect(function()
-    if not cooldown then
-        cooldown = true
-        workspace.Gravity = originalGravity
-        resetGravity()
-    end
-end)
+local function teleportWithGravity(cframe, gravity)
+	setGravity(gravity)
+	humanoidRootPart.CFrame = cframe
+	wait(0.5) -- Adjust the wait time as needed
+	setGravity(originalGravity)
+end
+
+-- Example usage
+local targetCFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.999729216, -4.84167906e-09, -0.0232702903, 4.33031522e-09, 1, -2.20253575e-08, 0.0232702903, 2.19186251e-08, 0.999729216) -- Change to your desired CFrame
+teleportWithGravity(targetCFrame, 0) -- Set gravity to 0 while teleporting

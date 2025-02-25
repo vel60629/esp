@@ -10,10 +10,10 @@ end
 local function teleportWithGravity(cframe, gravity)
 	setGravity(gravity)
 	humanoidRootPart.CFrame = cframe
-	wait(0.5) -- Adjust the wait time as needed
+	wait(0.7) -- Adjust the wait time as needed
 	setGravity(originalGravity)
 end
 
 -- Example usage
 local targetCFrame = CFrame.new(93394.0938, 14484.7158, 552.932373, -0.99987787, -9.97962388e-08, 0.0156287961, -9.87958941e-08, 1, 6.47788454e-08, -0.0156287961, 6.3226878e-08, -0.99987787) -- Change to your desired CFrame
-teleportWithGravity(targetCFrame, 0.1) -- Set gravity to 0 while teleporting
+teleportWithGravity(targetCFrame, 0.5) -- Set gravity to 0 while teleporting

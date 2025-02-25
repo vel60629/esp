@@ -16,4 +16,4 @@ end
 
 -- Example usage
 local targetCFrame = CFrame.new(-674.964844, 256.211639, -683.130981, 0.999729216, -4.84167906e-09, -0.0232702903, 4.33031522e-09, 1, -2.20253575e-08, 0.0232702903, 2.19186251e-08, 0.999729216) -- Change to your desired CFrame
-teleportWithGravity(targetCFrame, 0) -- Set gravity to 0 while teleporting
+teleportWithGravity(targetCFrame, 0.1) -- Set gravity to 0 while teleporting
